@@ -1,0 +1,14 @@
+{
+  "name": "statsboard",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "~1.2.0",
+    "angular-route": "~1.2.0",
+    "jquery": "~1.9",
+    "bootstrap": "~3.0.0",
+    "typeahead.js":"~0.9.3"
+  },
+  "devDependencies": {
+    "underscore":"~1.5.2"
+  }
+}

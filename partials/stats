@@ -1,0 +1,20 @@
+<div class="container">
+       <div class="well">
+         <h3 class="statsName" >{{ stats[statsId].name }}</h3>
+         <p class="statsDesc">{{ stats[statsId].description }}</p>
+       </div>
+    </div>
+    <div class="container">
+      <table class="table">
+        <thead>
+          <tr><th>Name</th><th>Order</th><th>Rank</th></tr>
+        </thead>
+        <tbody>
+          <tr class="gameStats" ng-repeat="player in stats[statsId].stats | orderBy:'-rank'">
+             <td class="playerName" >{{player.name}}</td><td class="ranking">{{ $index + 1 }}</td><td>
+          <div class="progress">
+          <div class="progress-bar progress-bar-success" style="width: {{player.rank}}%"></div><span style="margin-left:7px" >(<span class="rank">{{player.rank}}</span>)</span></div>
+</td></tr>
+        </tbody>
+      </table>
+    </div>

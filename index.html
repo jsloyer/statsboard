@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" ng-app="statsboard">
+<head>
+  <title>Pool Stats</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <link href="/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="/css/typeahead.js-bootstrap.css" rel="stylesheet" media="screen">
+</head>
+<body ng-controller="statsController">
+  <header >
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+    <div class="container">
+    <ul class="nav navbar-nav header-nav" >
+      <li><a class="navLink" href="/"><b>Stats Board</b></a></li>
+      <li ng-repeat="(key, item) in stats"><a class="navLink" href="/{{ key }}">{{ item.name }}</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" class="addBtn">Add</a></li>
+    </ul>
+    </div>
+    </nav>
+   </header>
+   <div class="ng-view" ng-animate="'animate'"></div>
+<div class="modal fade addDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Add Result</h4>
+        </div>
+        <div class="modal-body">
+
+	<div  class="panel panel-default teamOne">
+            <div class="panel-heading">Team one</div>
+		  <div class="panel-body">
+		    <div class="form-group">
+		    <label>Player One</label>
+		    <input type="text"  class="form-control player" placeholder="Player One">
+		  </div>
+		  <div class="form-group">
+		    <label>Player Two</label>
+		    <input type="text"  class="form-control player" placeholder="Player Two">
+		  </div>
+		  </div>
+        </div>
+	<div class="panel panel-default teamTwo">
+            <div class="panel-heading">Team two</div>
+		  <div class="panel-body">
+		    <div class="form-group">
+		    <label>Player One</label>
+		    <input type="text"  class="form-control player" placeholder="Player One">
+		  </div>
+		  <div class="form-group">
+		    <label>Player Two</label>
+		    <input type="text"  class="form-control player" placeholder="Player Two">
+		  </div>
+		  </div>
+        </div>
+<div class="row">
+<div class="form-group col-lg-3">
+<label>Winning Team</label>
+<select class="form-control winner">
+  <option>1</option>
+  <option>2</option>
+</select>
+</div>
+<div class="form-group col-lg-3">
+<label>Margin</label>
+<input type="number" class="form-control margin" />
+</div>
+</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Add</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  <script src="/components/angular/angular.js"></script>
+  <script src="/components/angular-route/angular-route.js"></script>
+  <script src="/components/jquery/jquery.min.js"></script>
+  <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/components/typeahead.js/dist/typeahead.min.js"></script>
+  <script type="text/javascript" >
+'use strict';
+var app = angular.module("statsboard",['ngRoute']);
+var players = <%= JSON.stringify(players) %>;
+app.config(function ($routeProvider, $locationProvider) {
+  $routeProvider.
+    when('/', {
+      template: <%= JSON.stringify(partials.root) %>
+    });
+  $routeProvider.
+    when('/:statsId', {
+      template: <%= JSON.stringify(partials.stats) %>,
+      controller:"statsIdController"
+    });
+  $routeProvider.otherwise({
+      redirectTo: '/'
+    });
+
+  $locationProvider.html5Mode(true);
+});
+app.controller("statsIdController", 
+function($scope, $routeParams) { 
+        $scope.statsId = $routeParams.statsId;
+});
+app.controller("statsController", 
+function($scope) {
+	$scope.stats = <%= JSON.stringify(stats) %> ;
+});
+
+$(function () { 
+	$("nav .addBtn").click( function() {
+	$('.addDialog input.player').val("");
+	$(".addDialog").modal('show');
+$('.addDialog input.player').typeahead({
+  name: "player",
+  local:  players
+});
+}); 
+} ); 
+</script>
+</body>
+</html>

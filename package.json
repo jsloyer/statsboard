@@ -1,0 +1,27 @@
+{
+  "name": "statsboard",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "node app",
+    "pretest":"jshint lib/**.js test/**.js",
+    "test": "NODE_ENV=test mocha -R spec",
+    "postinstall":"bower install"
+  },
+  "dependencies": {
+    "express": "~3.3.4",
+    "async": "~0.2.9",
+    "underscore": "~1.5.2",
+    "doppio": "~0.3.2"
+  },
+  "devDependencies": {
+    "bower": "~1.2.7",
+    "mocha": "~1.13.0",
+    "zombie": "~2.0.0",
+    "chai": "~1.8.0",
+    "zombie-phantom": "~0.0.6",
+    "jshint":"~2.1.11"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
