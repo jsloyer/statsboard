@@ -6,11 +6,12 @@
     "angular-route": "~1.2.0",
     "jquery": "~1.9",
     "bootstrap": "~3.0.0",
-    "typeahead.js":"~0.9.3",
-    "underscore":"~1.5.2",
-    "angular-socket-io":"~0.2.0",
-    "socket.io-client":"~0.9.16"
+    "underscore": "~1.5.2",
+    "angular-socket-io": "~0.2.0",
+    "socket.io-client": "~0.9.16"
   },
-  "devDependencies": {
+  "devDependencies": {},
+  "resolutions": {
+    "angular": "1.2.0-rc.2"
   }
 }
