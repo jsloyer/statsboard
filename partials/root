@@ -1,7 +1,7 @@
 <div class="container">
        <div class="jumbotron">
-         <h1>Pool Stats</h1>
-         <p>Find information about the pool stats</p>
+         <h1>Stats Board</h1>
+         <p>To see where people are ranked at the game, the results are tested with multiple ways</p>
        </div>
     </div>
     <div class="container">

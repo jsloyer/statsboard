@@ -16,7 +16,7 @@
       <li ng-repeat="(key, item) in stats"><a class="navLink" href="/{{ key }}">{{ item.name }}</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" class="addBtn">Add</a></li>
+        <li><a href="#" class="addBtn"><span class="glyphicon glyphicon-plus"></span> Add Result</a></li>
     </ul>
     </div>
     </nav>
@@ -36,11 +36,13 @@
 		  <div class="panel-body">
 		    <div class="form-group">
 		    <label>Player One</label>
-		    <input type="text"  class="form-control player" placeholder="Player One">
+		    <input type="text"  class="form-control playerTeam1Player1" placeholder="Player One" 
+                      ng-model="result.team1.player1">
 		  </div>
 		  <div class="form-group">
 		    <label>Player Two</label>
-		    <input type="text"  class="form-control player" placeholder="Player Two">
+		    <input type="text"  class="form-control playerTeam1Player2" placeholder="Player Two" 
+                      ng-model="result.team1.player2">
 		  </div>
 		  </div>
         </div>
@@ -49,30 +51,32 @@
 		  <div class="panel-body">
 		    <div class="form-group">
 		    <label>Player One</label>
-		    <input type="text"  class="form-control player" placeholder="Player One">
+		    <input type="text"  class="form-control playerTeam2Player1" placeholder="Player One" 
+                      ng-model="result.team2.player1">
 		  </div>
 		  <div class="form-group">
 		    <label>Player Two</label>
-		    <input type="text"  class="form-control player" placeholder="Player Two">
+		    <input type="text"  class="form-control playerTeam2Player2" placeholder="Player Two" 
+                      ng-model="result.team2.player2">
 		  </div>
 		  </div>
         </div>
 <div class="row">
 <div class="form-group col-lg-3">
 <label>Winning Team</label>
-<select class="form-control winner">
+<select class="form-control winner" ng-model="result.winningTeam">
   <option>1</option>
   <option>2</option>
 </select>
 </div>
 <div class="form-group col-lg-3">
 <label>Margin</label>
-<input type="number" class="form-control margin" />
+<input type="number" class="form-control margin" ng-model="result.margin" />
 </div>
 </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Add</button>
+          <button type="button" class="btn btn-primary addResultBtn" ng-click="addResults(result)">Add Result</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -81,11 +85,13 @@
   <script src="/components/angular-route/angular-route.js"></script>
   <script src="/components/jquery/jquery.min.js"></script>
   <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="/components/typeahead.js/dist/typeahead.min.js"></script>
+  <script src="/components/underscore/underscore-min.js"></script>
+  <script src="/components/socket.io-client/dist/socket.io.min.js"></script>
+  <script src="/components/angular-socket-io/socket.js"></script>
+  
   <script type="text/javascript" >
 'use strict';
-var app = angular.module("statsboard",['ngRoute']);
-var players = <%= JSON.stringify(players) %>;
+var app = angular.module("statsboard",['ngRoute','btford.socket-io']);
 app.config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
@@ -107,19 +113,55 @@ function($scope, $routeParams) {
         $scope.statsId = $routeParams.statsId;
 });
 app.controller("statsController", 
-function($scope) {
+function($scope,socket) {
 	$scope.stats = <%= JSON.stringify(stats) %> ;
+	socket.on("changeInfo",function(data) {
+          console.log(data);
+          _.each(data,function(value,key) {
+            _.each(value,function(change) {
+              $scope.stats[key].stats = _.filter(
+                $scope.stats[key].stats, function(item) {
+                return item.name != change.name;
+              });
+              
+              $scope.stats[key].stats.push(change);
+            });
+          });
+	});
+	$scope.addResults=function(result) {
+	  var message = {},
+            teams = [[],[]];
+          if(result.team1.player1) {
+            teams[0].push(result.team1.player1);
+          }
+          if(result.team1.player2) {
+            teams[0].push(result.team1.player2);
+          }
+          if(result.team2.player1) {
+            teams[1].push(result.team2.player1);
+          }
+          if(result.team2.player2) {
+            teams[1].push(result.team2.player2);
+          }
+          if(result.winningTeam == 1) {
+            message.winner = teams[0];
+            message.loser = teams[1];
+          } else {
+            message.winner = teams[1];
+            message.loser = teams[0];
+          }
+          message.margin = parseInt(result.margin);
+          socket.emit("addResult",message);
+          
+          $(".addDialog").modal('hide');
+	}
 });
 
 $(function () { 
 	$("nav .addBtn").click( function() {
-	$('.addDialog input.player').val("");
+	$('.addDialog input').val("");
 	$(".addDialog").modal('show');
-$('.addDialog input.player').typeahead({
-  name: "player",
-  local:  players
-});
-}); 
+  }); 
 } ); 
 </script>
 </body>
