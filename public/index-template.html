@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" ng-app="statsboard">
+<head>
+  <title>Stats Board</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <link href="components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/bootstrap-patch.css" rel="stylesheet" media="screen">
+</head>
+<body ng-controller="statsController">
+  <header >
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+    <div class="container">
+    <ul class="nav navbar-nav header-nav" >
+      <li><a class="navLink" href="/"><b>Stats Board</b></a></li>
+      <li ng-repeat="(key, item) in stats"><a class="navLink" href="/{{ key }}">{{ item.name }}</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" class="addBtn" ng-click="addResultModal()"><span class="glyphicon glyphicon-plus"></span> Add Result</a></li>
+    </ul>
+    </div>
+    </nav>
+   </header>
+   <div class="ng-view" ng-animate="fade"></div>
+   <!-- <%= partials %> -->
+   <!-- <%= endComment %>
+   <% if ( !isCompress ) { %>
+   <%= beginComment %>--> 
+   <script src="components/angular/angular.js"></script>
+   <script src="components/angular-route/angular-route.js"></script>
+   <script src="components/underscore/underscore.js"></script>
+   <script src="components/socket.io-client/dist/socket.io.js"></script>
+   <script src="components/angular-socket-io/socket.js"></script>
+   <script src="components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+   <!-- <%= endComment %> 
+   <script src="js/remote-controller.js"></script>
+   <%= beginComment %> <% if ( false ) { %>  -->
+   <script src="js/local-controller.js"></script>
+   <!-- <% } %> -->
+   <script src="js/local.js"></script>
+   <!--  <%= endComment %><% } else { %>
+   <script src="compress.js"></script>
+   <% } %> <%= beginComment %> --> 
+</body>
+</html>

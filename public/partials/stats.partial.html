@@ -9,12 +9,13 @@
         <thead>
           <tr><th>Name</th><th>Order</th><th>Rank</th></tr>
         </thead>
-        <tbody>
-          <tr class="gameStats" ng-repeat="player in stats[statsId].stats | orderBy:'-rank'">
-             <td class="playerName" >{{player.name}}</td><td class="ranking">{{ $index + 1 }}</td><td>
+        <tbody ng-repeat="player in stats[statsId].stats | orderBy:'-rank'">
+          <tr ng-click="player.showStats = !player.showStats" class="gameStats" >
+             <td class="playerName">{{player.name}}</td><td class="ranking">{{ $index + 1 }}</td><td>
           <div class="progress">
           <div class="progress-bar progress-bar-success" style="width: {{player.rank}}%"></div><span style="margin-left:7px" >(<span class="rank">{{player.rank}}</span>)</span></div>
 </td></tr>
+          <tr ng-show="player.showStats" ><td colspan=3><div show="player.showStats"  chart>Test show stats</div></td></tr>
         </tbody>
       </table>
     </div>

@@ -1,0 +1,59 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">Add Result</h4>
+    </div>
+    <div class="modal-body">
+      <div  class="panel panel-default teamOne">
+        <div class="panel-heading">Team one</div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label>Player One</label>
+              <input type="text"  class="form-control playerTeam1Player1" placeholder="Player One" 
+                ng-model="result.team1.player1">
+            </div>
+            <div class="form-group">
+              <label>Player Two</label>
+              <input type="text"  class="form-control playerTeam1Player2" placeholder="Player Two" 
+                ng-model="result.team1.player2">
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default teamTwo">
+          <div class="panel-heading">Team two</div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label>Player One</label>
+                  <input type="text"  class="form-control playerTeam2Player1" placeholder="Player One" 
+                    ng-model="result.team2.player1">
+              </div>
+              <div class="form-group">
+                <label>Player Two</label>
+                <input type="text"  class="form-control playerTeam2Player2" placeholder="Player Two" 
+                  ng-model="result.team2.player2">
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-lg-3">
+            <label>Winning Team</label>
+            <select class="form-control winner" ng-model="result.winningTeam">
+              <option>1</option>
+              <option>2</option>
+            </select>
+          </div>
+          <div class="form-group col-lg-3">
+            <label>Margin</label>
+            <input type="number" class="form-control margin" ng-model="result.margin" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
+          <button type="button" class="btn btn-primary addResultBtn" ng-click="addResults(result)">Add Result</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
