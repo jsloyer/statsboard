@@ -7,15 +7,25 @@
     <div class="container">
       <table class="table">
         <thead>
-          <tr><th>Name</th><th>Order</th><th>Rank</th></tr>
+          <tr><th>Name</th><th>Order</th><th>Rank</th><th></th></tr>
         </thead>
-        <tbody ng-repeat="player in stats[statsId].stats | orderBy:'-rank'">
-          <tr ng-click="player.showStats = !player.showStats" class="gameStats" >
+        <tbody ng-repeat="player in stats[statsId].stats | orderBy:'-rank'" ng-init="player.graphData=[]">
+          <tr class="gameStats" >
              <td class="playerName">{{player.name}}</td><td class="ranking">{{ $index + 1 }}</td><td>
           <div class="progress">
           <div class="progress-bar progress-bar-success" style="width: {{player.rank}}%"></div><span style="margin-left:7px" >(<span class="rank">{{player.rank}}</span>)</span></div>
-</td></tr>
-          <tr ng-show="player.showStats" ><td colspan=3><div show="player.showStats"  chart>Test show stats</div></td></tr>
+</td>
+<td><a href="#" ng-click="player.showStats = !player.showStats; loadGraphData(statsId,player)" ><span class="glyphicon glyphicon-chevron-down"> </span> History</a></td>
+</tr>
+          <tr ng-show="player.showStats" ><td colspan=4>
+          <dchart-line width="800" height="300">
+            <axis>
+                <x align="left" ticks="0">x Axis</x>
+                <y align="bottom"  ticks="0">y Axis</y>
+            </axis>
+            <data-set  stroke-width="2" data="player.graphData" interpolate="cardinal">
+            </data-set>
+        </dchart-line></td></tr>
         </tbody>
       </table>
     </div>

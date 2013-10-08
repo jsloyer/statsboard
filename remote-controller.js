@@ -1,6 +1,6 @@
 var controller = angular.module("statsboard.controller",['btford.socket-io']);
 controller.controller("statsController", 
-function($scope,socket,$rootScope) {
+function($scope,socket,$rootScope,$http) {
   
   $rootScope.addResult=function(result) {
     socket.emit("addResult",message);
@@ -19,5 +19,18 @@ function($scope,socket,$rootScope) {
       });
     });
   });
-        
+  $scope.loadGraphData = function(key,player) {
+    $http.get("graph",{ params:{statsType:key,name:player.name}}).success(
+      function(data) {
+        var cnt = 0;
+        data.forEach(function(item) {
+          cnt +=1;
+          item.x = cnt;
+          delete item.revision;
+          item.y =  Math.round(item.rank*1000)/1000;
+          delete item.rank;
+        });
+        player.graphData.replace(data);
+      });
+  };
 });

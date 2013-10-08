@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module("statsboard",['ngRoute','ui.bootstrap','statsboard.controller']);
+var app = angular.module("statsboard",['ngRoute','ui.bootstrap','statsboard.controller','dchart.line']);
 app.config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
@@ -60,15 +60,5 @@ app.controller("addResultController",  function ($scope, $modalInstance,$rootSco
 
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
-  };
-});
-
-app.directive('chart', function () {
-  return function (scope, element, attrs) {
-    var state = 0;
-    scope.$watch(attrs.show,function(value) {
-      state +=1;
-      console.log("testing",value,state);
-    });
   };
 });
