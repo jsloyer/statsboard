@@ -22,12 +22,20 @@ function($scope,socket,$rootScope,$http) {
   $scope.loadGraphData = function(key,player) {
     $http.get("graph",{ params:{statsType:key,name:player.name}}).success(
       function(data) {
-        var cnt = 0;
+        var cnt = 0,
+          min=false;
+        data.forEach(function(item) {
+          if( min === false ) {
+            min = item.rank;
+          } else {
+            min = Math.min(item.rank,min);
+          }
+        });
         data.forEach(function(item) {
           cnt +=1;
           item.x = cnt;
           delete item.revision;
-          item.y =  Math.round(item.rank*1000)/1000;
+          item.y =  Math.round((item.rank-min)*1000)/1000;
           delete item.rank;
         });
         player.graphData.replace(data);
