@@ -3,7 +3,7 @@ controller.controller("statsController",
 function($scope,socket,$rootScope,$http) {
   
   $rootScope.addResult=function(result) {
-    socket.emit("addResult",message);
+    socket.emit("addResult",result);
   };
   $scope.stats = <%= JSON.stringify(stats) %> ;
   socket.on("changeInfo",function(data) {

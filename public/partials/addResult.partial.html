@@ -36,17 +36,27 @@
             </div>
         </div>
         <div class="row">
-          <div class="form-group col-lg-3">
+          <div class="col-lg-3">
             <label>Winning Team</label>
             <select class="form-control winner" ng-model="result.winningTeam">
               <option>1</option>
               <option>2</option>
             </select>
           </div>
-          <div class="form-group col-lg-3">
-            <label>Margin</label>
-            <input type="number" class="form-control margin" ng-model="result.margin" />
+          <div class="col-lg-3">
+            <label>Winner Left</label>
+            <input type="number" class="form-control winner-left" ng-model="result.winnerLeft" />
           </div>
+          <div class="col-lg-3">
+            <label>Loser Left</label>
+            <input type="number" class="form-control loser-left" ng-model="result.loserLeft" />
+          </div>
+          <div class="col-lg-3">
+            <label>
+              Technical Win <input type="checkbox" ng-model="result.technical">
+            </label>
+          </div>
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" ng-click="cancel()">Close</button>

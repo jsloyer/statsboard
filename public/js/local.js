@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module("statsboard",['ngRoute','ui.bootstrap','statsboard.controller','dchart.line']);
+var app = angular.module("statsboard",['ngRoute','ui.bootstrap','statsboard.controller','dchart.line','ngAnimate']);
 app.config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
@@ -31,6 +31,7 @@ app.controller("addResultController",  function ($scope, $modalInstance,$rootSco
   
 
   $scope.addResults=function(result) {
+    console.log(result);
     var message = {},
       teams = [[],[]];
     if(result.team1.player1) {
@@ -52,7 +53,10 @@ app.controller("addResultController",  function ($scope, $modalInstance,$rootSco
       message.winner = teams[1];
       message.loser = teams[0];
     }
-    message.margin = parseInt(result.margin);
+    message.winnerLeft = parseInt(result.winnerLeft,10) || 0;
+    message.loserLeft = parseInt(result.loserLeft,10) || 0;
+    message.technical = result.technical || false;
+    console.log("addResult",message);
     $rootScope.addResult(message);
     
     $modalInstance.close();
